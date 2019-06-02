@@ -3,7 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "start-dev": "nodemon",
+    "migrate-start": "npm run migrate && npm start",
+    "migrate-start-dev": "npm run migrate && npm run start-dev",
+    "migrate": "node -r ./dotenv-config.js ./node_modules/knex/bin/cli.js migrate:latest --env databaseConfig",
+    "makemigration": "./node_modules/knex/bin/cli.js migrate:make --env databaseConfig",
+    "test": "mocha"
   },
   "dependencies": {
     "bcrypt": "^3.0.5",
