@@ -13,7 +13,7 @@ const router = require('express-promise-router')();
 
 // Global Functions accessible all across the app
 
-const knex = Knex(KnexConfig[process.env.NODE_ENV || 'databaseConfig']);
+const knex = Knex(KnexConfig['databaseConfig']);
 Model.knex(knex);
 
 const app = express();
