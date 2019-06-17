@@ -21,6 +21,7 @@ const CreateCategory = async (req, res) => {
         data.level = category.level + 1;
     }
     data.slug = slugify(data.name);
+    data['user_id'] = req.user.id;
     let inserted_category = await Category.query().insert(data).returning('*');
     return createdResponse(res, inserted_category);
 }

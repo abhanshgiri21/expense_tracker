@@ -17,6 +17,9 @@ exports.up = knex => {
     table
       .integer('amount')
       .unsigned();
+    table
+      .text('tags')
+      .unsigned();
     table.timestamps(false, true);
   })
 };
