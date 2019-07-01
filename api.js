@@ -18,7 +18,9 @@ const {
 const {
     RecordExpense,
     EditExpense,
-    DeleteExpense
+    DeleteExpense,
+    ListAllExpenses,
+    ExpenseListWithCategories
 } = require('./controllers/expense');
 
 
@@ -38,21 +40,45 @@ module.exports = router => {
 
     // Category CRUD endpoints
 
-    router.get('/category', CategoryList);
+    router.get('/category', passport.authenticate('jwt', {
+        session: false
+    }), CategoryList);
 
-    router.get('/category/:categoryId', GetCategory);
+    router.get('/category/:categoryId', passport.authenticate('jwt', {
+        session: false
+    }), GetCategory);
 
-    router.post('/category', CreateCategory);
+    router.post('/category', passport.authenticate('jwt', {
+        session: false
+    }), CreateCategory);
 
-    router.patch('/category/:categoryId', UpdateCategory);
+    router.patch('/category/:categoryId', passport.authenticate('jwt', {
+        session: false
+    }), UpdateCategory);
 
-    router.delete('/category/:categoryId', DeleteCategory);
+    router.delete('/category/:categoryId', passport.authenticate('jwt', {
+        session: false
+    }), DeleteCategory);
 
     // expense CRUD endpoints
 
-    router.post('/expense', RecordExpense);
+    router.post('/expense', passport.authenticate('jwt', {
+        session: false
+    }), RecordExpense);
 
-    router.patch('/expense/:expenseId', EditExpense);
+    router.patch('/expense/:expenseId', passport.authenticate('jwt', {
+        session: false
+    }), EditExpense);
 
-    router.delete('/expense/:expenseId', DeleteExpense);
+    router.delete('/expense/:expenseId', passport.authenticate('jwt', {
+        session: false
+    }), DeleteExpense);
+
+    router.get('/expense', passport.authenticate('jwt', {
+        session: false
+    }), ListAllExpenses);
+
+    router.get('/expense_list', passport.authenticate('jwt', {
+        session: false
+    }), ExpenseListWithCategories);
 }

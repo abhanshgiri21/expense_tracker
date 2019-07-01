@@ -15,6 +15,7 @@ const CreateUser = async (req, res) => {
 
 const LoginUser = async (req, res) => {
     let data = req.body;
+    if(!data.username) { throw badRequestError('Username is required')};
     let user = await User.query().skipUndefined().where('username', data.username).first();
     if (!user) {
         throw badRequestError('User with this username doesn\'t exist');

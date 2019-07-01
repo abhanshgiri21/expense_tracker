@@ -4,7 +4,7 @@ const Model = require('objection').Model;
 
 class Expense extends Model {
     static get tableName() {
-        return 'category';
+        return 'expense';
     }
 
     static get jsonSchema() {
@@ -18,7 +18,7 @@ class Expense extends Model {
         return {
             category: {
                 relation: Model.BelongsToOneRelation,
-                modelClass: Category,
+                modelClass: __dirname + '/Category',
                 join: {
                     from: 'expense.category_id',
                     to: 'category.id'

@@ -27,12 +27,12 @@ class User extends BaseModel {
 
     static get relationMappings() {
         return {
-            tweets: {
+            categories: {
                 relation: BaseModel.HasManyRelation,
-                modelClass: __dirname + '/Tweet',
+                modelClass: __dirname + '/Category',
                 join: {
                     from: 'user.id',
-                    to: 'tweets.userId'
+                    to: 'category.user_id'
                 }
             }
         }

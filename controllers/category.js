@@ -7,13 +7,14 @@ const {
 const Category = require('../models/Category');
 
 const CategoryList = async (req, res) => {
-    let categories = await Category.query().where('level', 0).eager('[children.^]');
+    let categories = await Category.query().select('id', 'name').where('level', 0).andWhere('user_id', req.user.id).eager('[children.^]');
     return okResponse(res, categories);
 }
 
 const CreateCategory = async (req, res) => {
     let data = req.body;
     if (data.parentId) {
+        data.parentId = Number(data.parentId);
         let category = await Category.query().findById(data.parentId);
         if (!category) {
             throw badRequestError('parentId incorrect!');
@@ -54,7 +55,7 @@ const DeleteCategory = async (req, res) => {
 
 const GetCategory = async (req, res) => {
     let categoryId = req.params.categoryId;
-    let category = await Category.query().findById(categoryId).eager('[children.^]')
+    let category = await Category.query().findById(categoryId).where('user_id', req.user.id).eager('[children.^]')
     if (!category) {
         throw notFoundError('Category not found!');
     }

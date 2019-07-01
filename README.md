@@ -1,5 +1,6 @@
 # Expense Tracker
 
+## Postman collection link [here](https://www.getpostman.com/collections/a1e32c8319ab5e677b21)
 #### Running with docker
 
 Steps to run with docker:

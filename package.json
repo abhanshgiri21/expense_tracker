@@ -12,6 +12,9 @@
     "test": "mocha"
   },
   "dependencies": {
+    "@angular/animations": "^8.0.1",
+    "@angular/cdk": "^8.0.1",
+    "@angular/material": "^8.0.1",
     "bcrypt": "^3.0.5",
     "cookie-parser": "^1.4.4",
     "debug": "~2.6.9",

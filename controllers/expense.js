@@ -1,13 +1,14 @@
 let Expense = require('../models/Expense');
+let Category = require('../models/Category');
 
-let RecordExpense = (req, res) => {
+let RecordExpense = async (req, res) => {
     let data = req.body, insertedExpense;
     data['user_id'] = req.user.id;
     insertedExpense = await Expense.query().insert(data);
     return createdResponse(res, insertedExpense);
 }
 
-let EditExpense = (req, res) => {
+let EditExpense = async (req, res) => {
     let expenseId = req.params.expenseId, data = req.body;
 
     if(!expenseId) {
@@ -27,13 +28,13 @@ let EditExpense = (req, res) => {
     return okResponse(res, updatedExpense);
 }
 
-let DeleteExpense = (req, res) => {
-    let expenseId = req.params.expenseId, data = req.body;
+let DeleteExpense = async (req, res) => {
+    let expenseId = req.params.expenseId;
 
     if(!expenseId) {
         throw badRequestError('Expense Id is required')
     }
-    let expense = await Expense.query().findOneById(expenseId);
+    let expense = await Expense.query().findById(expenseId);
     if(!expense) {
         throw NotFoundError('Expense not found!');
     }
@@ -43,8 +44,21 @@ let DeleteExpense = (req, res) => {
     return noContentResponse(res);
 }
 
+let ListAllExpenses = async (req, res) => {
+    let expenses = await Expense.query().where('is_deleted', false);
+
+    return okResponse(res, expenses);
+}
+
+const ExpenseListWithCategories = async (req, res) => {
+    let categories = await Category.query().where('level', 0).andWhere('user_id', req.user.id).eager('[children.[expense, children.[expense]]]');
+    return okResponse(res, categories);
+}
+
 module.exports = {
     RecordExpense,
     EditExpense,
-    DeleteExpense
+    DeleteExpense,
+    ListAllExpenses,
+    ExpenseListWithCategories
 }
