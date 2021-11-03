@@ -32,6 +32,6 @@
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "pg": "^7.9.0",
-    "validator": "^10.11.0"
+    "validator": "^13.7.0"
   }
 }
